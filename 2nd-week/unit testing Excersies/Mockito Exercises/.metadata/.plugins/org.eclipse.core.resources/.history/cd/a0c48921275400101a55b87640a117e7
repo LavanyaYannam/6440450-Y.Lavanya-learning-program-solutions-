@@ -1,0 +1,25 @@
+package Exercise1;
+
+import static org.mockito.Mockito.*;
+import static org.junit.jupiter.api.Assertions.*;
+
+import org.junit.jupiter.api.Test;
+
+public class MyServiceTest {
+
+    @Test
+    public void testExternalApi() {
+        // Mock ExternalApi
+        ExternalApi mockApi = mock(ExternalApi.class);
+
+        // Stub getData method
+        when(mockApi.getData()).thenReturn("Mock Data");
+
+        // Inject into MyService
+        MyService service = new MyService(mockApi);
+
+        // Run and assert
+        String result = service.fetchData();
+        assertEquals("Mock Data", result);
+    }
+}
