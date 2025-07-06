@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Country Manager</title>
+</head>
+<body>
+<h2>All Countries</h2>
+<button onclick="getAll()">Show All</button>
+<ul id="country-list"></ul>
+
+<h2>Add Country</h2>
+<input id="code" placeholder="Code (e.g., IN)" />
+<input id="name" placeholder="Country Name (e.g., India)" />
+<button onclick="addCountry()">Add</button>
+
+<h2>Update Country</h2>
+<input id="update-code" placeholder="Code"/>
+<input id="update-name" placeholder="New Name"/>
+<button onclick="updateCountry()">Update</button>
+
+<h2>Delete Country</h2>
+<input id="delete-code" placeholder="Code"/>
+<button onclick="deleteCountry()">Delete</button>
+
+<script>
+function getAll() {
+    fetch("/countries")
+        .then(res => res.json())
+        .then(data => {
+            let list = document.getElementById("country-list");
+            list.innerHTML = "";
+            data.forEach(c => {
+                let item = document.createElement("li");
+                item.innerText = `${c.code} - ${c.name}`;
+                list.appendChild(item);
+            });
+        });
+}
+
+function addCountry() {
+    const code = document.getElementById("code").value.trim();
+    const name = document.getElementById("name").value.trim();
+
+    if (!code || !name) {
+        alert("Please enter both code and name.");
+        return;
+    }
+
+    fetch("/countries", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ code, name })
+    }).then(() => alert("Country added!"));
+}
+
+
+
+
+function updateCountry() {
+    fetch(`/countries?code=${document.getElementById("update-code").value}&name=${document.getElementById("update-name").value}`, {
+        method: "PUT"
+    }).then(() => alert("Updated!"));
+}
+
+function deleteCountry() {
+    fetch(`/countries/${document.getElementById("delete-code").value}`, {
+        method: "DELETE"
+    }).then(() => alert("Deleted!"));
+}
+
+</script>
+</body>
+</html>
