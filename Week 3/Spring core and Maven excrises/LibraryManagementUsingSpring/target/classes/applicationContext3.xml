@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="
+           http://www.springframework.org/schema/beans 
+           http://www.springframework.org/schema/beans/spring-beans.xsd
+           http://www.springframework.org/schema/aop 
+           http://www.springframework.org/schema/aop/spring-aop.xsd">
+
+    <!-- Enable AOP -->
+    <aop:config>
+        <aop:aspect ref="loggingAspect">
+            <aop:around method="logExecutionTime"
+                        pointcut="execution(* exercise3.BookService.addBook(..))"/>
+        </aop:aspect>
+    </aop:config>
+
+    <!-- Define Aspect Bean -->
+    <bean id="loggingAspect" class="exercise3.LoggingAspect" />
+
+    <!-- Define Repository and Service Beans -->
+    <bean id="bookRepository" class="exercise3.BookRepository" />
+
+    <bean id="bookService" class="exercise3.BookService">
+        <property name="bookRepository" ref="bookRepository"/>
+    </bean>
+
+</beans>
