@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans 
+	http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+	<bean id="emp1" class="HandsOn1.Employee">
+		<property name="id" value="101"/>
+		<property name="name" value="Alice"/>
+		<property name="department" value="HR"/>
+	</bean>
+
+	<bean id="emp2" class="HandsOn1.Employee">
+		<property name="id" value="102"/>
+		<property name="name" value="Bob"/>
+		<property name="department" value="IT"/>
+	</bean>
+
+	<bean id="emp3" class="HandsOn1.Employee">
+		<property name="id" value="103"/>
+		<property name="name" value="Charlie"/>
+		<property name="department" value="Finance"/>
+	</bean>
+
+	<bean id="employeeList" class="java.util.ArrayList">
+		<constructor-arg>
+			<list>
+				<ref bean="emp1"/>
+				<ref bean="emp2"/>
+				<ref bean="emp3"/>
+			</list>
+		</constructor-arg>
+	</bean>
+
+</beans>
